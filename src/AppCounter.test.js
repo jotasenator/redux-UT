@@ -19,7 +19,7 @@ const store = configureStore( {
 
 test( 'renders App and interacts with counter', async () =>
 {
-    const { getByText, debug } = render(
+    const { getByText, findByText, debug } = render(
         <Provider store={ store }>
             <App />
         </Provider>
@@ -40,6 +40,12 @@ test( 'renders App and interacts with counter', async () =>
 
     fireEvent.click( getByText( 'Decrement 5' ) );
     await waitFor( () => expect( getByText( '-1' ) ).toBeInTheDocument() );
+
+    // Test data fetching
+    expect( getByText( 'Data' ) ).toBeInTheDocument();
+    expect( getByText( 'Loading...' ) ).toBeInTheDocument();
+
+    expect( await findByText( 'sunt aut facere repellat provident occaecati excepturi optio reprehenderit', {}, { timeout: 4000 } ) ).toBeInTheDocument();
 
 
 } );
